@@ -1,8 +1,8 @@
 from project import app
 from flask import request, jsonify
 
-from project.model.turma import Turma
-from project.model.turma import TurmaDatabase
+from project.model.turmaModel import TurmaModel
+
 
 @app.route('/cadastrarTurma', methods=['POST'])
 def cadastrar_turma():

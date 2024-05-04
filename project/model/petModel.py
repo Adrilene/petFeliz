@@ -6,14 +6,15 @@ import os
 
 load_dotenv()
 
-class PetDatabase():
+class PetModel():
+
     def __init__(self):
         self.client = MongoClient(os.getenv('URI_MONGO'), server_api=ServerApi('1'))
         self.database = self.client["PetFeliz"]
         self.collection = self.database["Pets"]
         
     def inserir_pet(self, pet):
-        inserted = self.collection.insert_one(pet.__dict__)
+        inserted = self.collection.insert_one(pet)
         if inserted.inserted_id:
             return True
         return False

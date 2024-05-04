@@ -1,16 +1,14 @@
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from project.model.turma import Turma
 
 import os
-import json
 
 
 load_dotenv()
 
 
-class TurmaDatabase:
+class TurmaModel:
     def __init__(self):
         self.client = MongoClient(os.getenv("URI_MONGO"), server_api=ServerApi("1"))
         self.database = self.client["PetFeliz"]
@@ -24,8 +22,7 @@ class TurmaDatabase:
 
     def ver_todas_as_turmas(self):
         turmasDB =  list(self.collection.find())
-        del turmaDB['_id'] for turmaDB in turmasDB
-        return [Turma(**turmaDB) for turmaDB in turmasDB]
+        return turmasDB
 
 
     def adicionar_pet(self, turma_id, pet_id):

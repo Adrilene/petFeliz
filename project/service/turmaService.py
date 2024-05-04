@@ -1,4 +1,4 @@
-class Turma():
+class TurmaService():
     def __init__(self, nome, tipo_pet, porte_pet, pets = []):
         self.nome = nome
         self.tipo_pet = tipo_pet

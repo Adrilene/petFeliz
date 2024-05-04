@@ -38,4 +38,10 @@ def get_endereco(endereco):
 
     return enderecoCompleto
 
-print(get_endereco({'cep': '60870520', 'numero': '1598'}))
+print(get_endereco({'cep': '60555555', 'numero': '1598'}))
+
+# a = [1, 2, 3]
+# b = [1, 2, 3, 4, 5]
+
+# if a in b:
+#     print("sim")
