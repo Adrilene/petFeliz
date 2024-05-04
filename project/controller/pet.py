@@ -2,9 +2,9 @@ from project import app
 from flask import request, jsonify
 
 from project.model.pet import Pet
-from project.model.petDatabase import PetDatabase
+from project.model.pet import PetDatabase
 from project.model.turma import Turma
-from project.model.turmaDatabase import TurmaDatabase
+from project.model.turma import TurmaDatabase
 
 @app.route('/verTodosPets', methods=['GET'])
 def ver_todos_pets():
@@ -27,3 +27,9 @@ def cadastrar_pet():
     
     return jsonify(f'Erro ao cadastrar o Pet {new_pet.nome}'), 400
 
+
+@app.route('/definirTurmas', methods=['GET'])
+def definir_turmas():
+    if Pet.definir_turma_todos():
+        return jsonify(f'Todas as turmas definidas!'), 200
+    return jsonify('Erro ao definir as turmas'), 500

@@ -2,7 +2,7 @@ from project import app
 from flask import request, jsonify
 
 from project.model.turma import Turma
-from project.model.turmaDatabase import TurmaDatabase
+from project.model.turma import TurmaDatabase
 
 @app.route('/cadastrarTurma', methods=['POST'])
 def cadastrar_turma():
@@ -19,4 +19,10 @@ def cadastrar_turma():
 
 @app.route('/verTodasTurmas', methods=['GET'])
 def ver_todas_turmas():
-    return ''
+    turmas = Turma.ver_todas_as_turmas()
+    resposta = []
+    for turma in turmas:
+        resposta.append({"nome": turma.nome, "pets": turma.pets})
+
+    return jsonify(resposta), 200
+    

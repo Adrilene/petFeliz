@@ -1,6 +1,36 @@
-class Turma():
-    def __init__(self, nome, tipo_pet, porte_pet, pets = []):
-        self.nome = nome
-        self.tipo_pet = tipo_pet
-        self.porte_pet = porte_pet
-        self.pets = pets
+from dotenv import load_dotenv
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+from project.model.turma import Turma
+
+import os
+import json
+
+
+load_dotenv()
+
+
+class TurmaDatabase:
+    def __init__(self):
+        self.client = MongoClient(os.getenv("URI_MONGO"), server_api=ServerApi("1"))
+        self.database = self.client["PetFeliz"]
+        self.collection = self.database["Turmas"]
+
+    def inserir_turma(self, turma):
+        inserted = self.collection.insert_one(turma.__dict__)
+        if inserted.inserted_id:
+            return True
+        return False
+
+    def ver_todas_as_turmas(self):
+        turmasDB =  list(self.collection.find())
+        del turmaDB['_id'] for turmaDB in turmasDB
+        return [Turma(**turmaDB) for turmaDB in turmasDB]
+
+
+    def adicionar_pet(self, turma_id, pet_id):
+        self.collection.find_one_and_update(
+            {'_id': turma_id},
+            {'$push': {'pets': pet_id}}
+        )
+

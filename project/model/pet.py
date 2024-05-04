@@ -1,41 +1,22 @@
-import requests
+from dotenv import load_dotenv
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
-from project.model.turmaDatabase import TurmaDatabase
+import os
 
-class Pet():
-    def __init__(self, nome, tutor, endereco, contato, tipo, porte=None):
-        self.nome = nome
-        self.tutor = tutor
-        self.endereco = self.get_endereco_completo(endereco)
-        self.contato = contato
-        self.tipo = tipo
-        self.porte = porte
-        self.turma = ''
+load_dotenv()
 
-    def definir_turma(self):
-        turmas = TurmaDatabase().ver_todas_as_turmas()
-
-        for turma in turmas:
-            if turma.tipo_pet == self.tipo and turma.porte_pet == self.porte:
-                self.turma = turma['nome']
-                TurmaDatabase().adicionar_pet(self, )
-
-
-    def get_endereco_completo(self, endereco):
+class PetDatabase():
+    def __init__(self):
+        self.client = MongoClient(os.getenv('URI_MONGO'), server_api=ServerApi('1'))
+        self.database = self.client["PetFeliz"]
+        self.collection = self.database["Pets"]
         
-        url = f"https://viacep.com.br/ws/{endereco['cep']}/json/"
+    def inserir_pet(self, pet):
+        inserted = self.collection.insert_one(pet.__dict__)
+        if inserted.inserted_id:
+            return True
+        return False
 
-        payload = {}
-        headers = {}
-
-        response = requests.request("GET", url, headers=headers, data=payload)
-        enderecoCompleto = {
-            "Rua": response.json()['logradouro'],
-            "Bairro": response.json()['bairro'],
-            "Cidade": response.json()['localidade'],
-            "Estado": response.json()['uf'],
-            "Numero": endereco['numero']
-        }
-
-        return enderecoCompleto
-        
+    def ver_pet(self, busca):
+        return self.collection.find(busca)
