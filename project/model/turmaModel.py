@@ -21,7 +21,7 @@ class TurmaModel:
         return False
 
     def ver_todas_as_turmas(self):
-        turmasDB =  list(self.collection.find())
+        turmasDB = list(self.collection.find())
         return turmasDB
 
 

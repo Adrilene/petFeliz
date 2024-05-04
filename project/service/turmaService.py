@@ -1,6 +1,10 @@
-class TurmaService():
-    def __init__(self, nome, tipo_pet, porte_pet, pets = []):
-        self.nome = nome
-        self.tipo_pet = tipo_pet
-        self.porte_pet = porte_pet
-        self.pets = pets
+def check_turma(turma):
+    mandatory_fields = ["nome", "tipo_pet""]
+    for field in mandatory_fields:
+        if field not in turma.keys():
+            return False, f"{field} não encontrado"
+
+    if turma["tipo_pet"] == "cachorro" and "porte" not in turma.keys():
+        return False, f"Obrigatório definir porte para cachorro"
+
+    return True, "Ok"

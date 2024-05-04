@@ -15,9 +15,13 @@ class PetModel():
         
     def inserir_pet(self, pet):
         inserted = self.collection.insert_one(pet)
-        if inserted.inserted_id:
-            return True
-        return False
+        try:
+            return inserted.inserted_id:
+        except:
+            return False
 
     def ver_pet(self, busca):
         return self.collection.find(busca)
+
+    def definir_turma_todos():
+        

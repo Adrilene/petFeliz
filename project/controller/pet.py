@@ -36,10 +36,11 @@ def cadastrar_pet():
             if turma:
                 new_pet['turma'] = turma['_id']
                 
-            
-            if PetModel().inserir_pet(new_pet):
+            pet_id = PetModel().inserir_pet(new_pet)
+            if pet_id:
                 if not turma:
                     return jsonify(f'Pet {new_pet.nome} cadastrado, mas está sem turma'), 201
+                TurmaModel().adicionar_pet(new_pet['turma'], pet_id)
                 return jsonify(f"Pet {new_pet.nome} cadastrado na turma {turma['nome']}"), 201
 
         except:
@@ -52,6 +53,6 @@ def cadastrar_pet():
 
 @app.route('/definirTurmas', methods=['GET'])
 def definir_turmas():
-    if PetModel.definir_turma_todos():
+    if PetModel().definir_turma_todos():
         return jsonify(f'Todas as turmas definidas!'), 200
     return jsonify('Erro ao definir as turmas'), 500
