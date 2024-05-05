@@ -19,9 +19,9 @@ def definir_turma(pet):
     turmas = TurmaModel().ver_todas_as_turmas()
 
     for turma in turmas:
-        if turma['tipo_pet'] == pet['tipo'] and turma['porte_pet'] == pet['porte']:
+        if turma["tipo_pet"] == pet["tipo"] and turma["porte_pet"] == pet["porte"]:
             return turma
-    
+
     return False
 
 
@@ -31,9 +31,9 @@ def definir_turma_todos():
     for pet in pets:
         turma = definir_turma(pet)
         if turma:
-            if pet['_id'] not in turma['pets']:
-                TurmaModel().adicionar_pet(turma['_id'], pet['_id'])
-                PetModel().alterar_pet(pet['_id'], {'turma': turma['_id']})
+            if pet["_id"] not in turma["pets"]:
+                TurmaModel().adicionar_pet(turma["_id"], pet["_id"])
+                PetModel().alterar_pet(pet["_id"], {"turma": turma["_id"]})
 
 
 def get_endereco_completo(endereco):
@@ -53,3 +53,13 @@ def get_endereco_completo(endereco):
     }
 
     return enderecoCompleto
+
+
+def get_todos_pets():
+    todos_pets = PetModel().ver_todos_pets()
+    for pet in todos_pets:
+        pet.pop("_id")
+        turma = TurmaModel().ver_uma_turma(pet["turma"])["nome"]
+        pet["turma"] = turma
+
+    return todos_pets

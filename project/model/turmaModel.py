@@ -25,6 +25,10 @@ class TurmaModel:
         turmasDB = list(self.collection.find())
         return turmasDB
 
+    def ver_uma_turma(self, turma_id):
+        return self.collection.find_one({'_id': turma_id})
+
+
     def alterar_turma(self, turma_id, atributo, dado):
         self.collection.find_one_and_update(
             {'_id': turma_id},

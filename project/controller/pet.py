@@ -8,12 +8,13 @@ from project.service.petService import (
     get_endereco_completo,
     definir_turma,
     definir_turma_todos,
+    get_todos_pets
 )
 
 
 @app.route("/verTodosPets", methods=["GET"])
 def ver_todos_pets():
-    return ""
+    return get_todos_pets()
 
 
 @app.route("/cadastrarPet", methods=["POST"])
