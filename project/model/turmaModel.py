@@ -29,16 +29,19 @@ class TurmaModel:
         return self.collection.find_one({'_id': turma_id})
 
 
-    def alterar_turma(self, turma_id, atributo, dado):
-        self.collection.find_one_and_update(
-            {'_id': turma_id},
-            {'$set': {atributo: dado}}
-        )
-
+    def alterar_turma(self, turma_id, alteracao):
+        try:
+            self.collection.find_one_and_update(
+                {'_id': ObjectId(turma_id)},
+                {'$set': alteracao}
+            )
+            return True
+        except:
+            return False
     
     def adicionar_pet(self, turma_id, pet_id):
         self.collection.find_one_and_update(
-            {'_id': turma_id},
+            {'_id': ObjectId(turma_id)},
             {'$push': {'pets': pet_id}}
         )
 

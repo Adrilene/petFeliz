@@ -72,7 +72,7 @@ def definir_turmas():
     return jsonify(f"Todas as turmas definidas!"), 200
 
 
-@app.route("/alterarPet", methods=["GET"])
+@app.route("/alterarPet", methods=["PATCH"])
 def alterar_pet():
     alteracao = request.args.to_dict()
     pet_id = alteracao["pet_id"]
@@ -84,7 +84,7 @@ def alterar_pet():
         return jsonify("Erro de conexão com o banco"), 500
 
 
-@app.route("/excluirPet/<pet_id>", methods=["GET"])
+@app.route("/excluirPet/<pet_id>", methods=["DELETE"])
 def excluir_pet(pet_id):
     PetModel().excluir_pet(pet_id)
 

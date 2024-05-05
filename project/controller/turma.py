@@ -37,19 +37,18 @@ def ver_todas_turmas():
     return jsonify(resposta), 200
     
 
-@app.route("/alterarTurma", methods=["GET"])
+@app.route("/alterarTurma", methods=["PATCH"])
 def alterar_turma():
     alteracao = request.args.to_dict()
     turma_id = alteracao["turma_id"]
 
     if TurmaModel().alterar_turma(turma_id, alteracao):
-        return jsonify("Turma alterado com sucesso"), 200
+        return jsonify("Turma alterada com sucesso"), 200
 
-    else:
-        return jsonify("Erro de conexão com o banco"), 500
+    return jsonify("Erro de conexão com o banco"), 500
 
 
-@app.route("/excluirTurma/<turma_id>", methods=["GET"])
+@app.route("/excluirTurma/<turma_id>", methods=["DELETE"])
 def excluir_turma(turma_id):
     TurmaModel().excluir_turma(turma_id)
 
