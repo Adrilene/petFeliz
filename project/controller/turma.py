@@ -12,8 +12,8 @@ def cadastrar_turma():
     result, msg = check_turma(response.json)
     if result:
         new_turma = {
-            "nome": request.json['nome'],
-            "tipo_pet": request.json['tipo_pet'],
+            "nome": request.json['nome'].lower(),
+            "tipo_pet": request.json['tipo_pet'].lower(),
             "porte_pet": request.json['porte_pet'] if 'porte_pet' in request.json.keys() else None
         }
 

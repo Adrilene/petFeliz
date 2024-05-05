@@ -25,6 +25,16 @@ def definir_turma(pet):
     return False
 
 
+def definir_turma_todos():
+    pets = PetModel().ver_todos_pets()
+
+    for pet in pets:
+        turma = definir_turma(pet)
+        if pet['_id'] not in turma['pets']:
+            TurmaModel().adicionar_pet(turma['_id'], pet['_id'])
+            PetModel().alterar_pet(pet['_id'], 'turma', turma['_id'])
+
+
 def get_endereco_completo(endereco):
 
     url = f"https://viacep.com.br/ws/{endereco['cep']}/json/"

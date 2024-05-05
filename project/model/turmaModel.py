@@ -20,6 +20,12 @@ class TurmaModel:
             return True
         return False
 
+    def alterar_turma(self, turma_id, atributo, dado):
+        self.collection.find_one_and_update(
+            {'_id': turma_id},
+            {'$set': {atributo: dado}}
+        )
+
     def ver_todas_as_turmas(self):
         turmasDB = list(self.collection.find())
         return turmasDB
