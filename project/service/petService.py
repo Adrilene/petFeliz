@@ -30,9 +30,10 @@ def definir_turma_todos():
 
     for pet in pets:
         turma = definir_turma(pet)
-        if pet['_id'] not in turma['pets']:
-            TurmaModel().adicionar_pet(turma['_id'], pet['_id'])
-            PetModel().alterar_pet(pet['_id'], 'turma', turma['_id'])
+        if turma:
+            if pet['_id'] not in turma['pets']:
+                TurmaModel().adicionar_pet(turma['_id'], pet['_id'])
+                PetModel().alterar_pet(pet['_id'], {'turma': turma['_id']})
 
 
 def get_endereco_completo(endereco):
